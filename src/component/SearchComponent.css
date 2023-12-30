@@ -1,0 +1,71 @@
+.search-form {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-input {
+    padding: 8px;/* SearchComponent.css */
+    .search-form {
+      display: flex;
+      align-items: center;
+    }
+    
+    .search-container {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .search-input {
+      padding: 8px 30px 8px 10px; /* Adjust padding as needed */
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      width: 200px; /* Adjust width as needed */
+    }
+    
+    .search-button {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 8px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+    
+    /* Style the icon inside the button */
+    .search-button i {
+      margin-right: 5px;
+    }
+    
+    /* Hover effect for the button */
+    .search-button:hover {
+      background-color: #0056b3;
+    }
+    
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+    flex: 1;
+  }
+  
+  .search-button {
+    padding: 8px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Style the icon inside the button */
+  .search-button i {
+    margin-right: 5px;
+  }
+  
+  /* Hover effect for the button */
+  .search-button:hover {
+    background-color: #0056b3;
+  }
+  

@@ -1,0 +1,33 @@
+.parent-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 2%;
+  }
+  
+  .label {
+    margin-right: 10px;
+  }
+  
+  .dropdown {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  
+  .dropdown:hover {
+    border-color: #999;
+  }
+  
+  .dropdown:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.3);
+  }
+  
+  /* Rest of your existing styles */
+  
