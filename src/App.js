@@ -6,16 +6,20 @@ import Home from '../src/page/home/Home';
 import Dashboard from '../src/page/dashboard/Dashboard';
 import Employee from '../src/page/employee/Employee';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import PrivateRoute from './service/PrivateRoute'
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/role' element={<Role />} />
-          <Route path='/employee' element={<Employee />} />
+          <Route element={<PrivateRoute />}>
+            <Route element={<Home />} path="/" exact />
+            <Route path='/' element={<Home />} />
+            <Route path='/employee' element={<Employee />} />
+            <Route path='/role' element={<Role />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+          <Route element={<Login />} path="/login" />
         </Routes>
       </Router>
     </div>

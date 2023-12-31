@@ -1,4 +1,4 @@
-import axios from '../config/axiosConfig';
+import axios from './axiosConfig';
 export const fetchData = async (endpoint) => {
   try {
     const response = await axios.get(endpoint);
@@ -13,6 +13,7 @@ export const postData = async (endpoint, data) => {
     const response = await axios.post(endpoint, data);
     return response.data;
   } catch (error) {
+    console.log('error---',error);
     throw new Error(error);
   }
 };

@@ -1,53 +1,60 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import setAuthToken from '../../service/tokenConfig'
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'; // Import eye icons
-import { postData,fetchData } from '../../service/apiService';
+import { postData, fetchData } from '../../service/apiService';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [data, setData] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
-
+  const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log('Username:', username);
     console.log('Password:', password);
-   
-    await logiInUser({username:username,password:password});
+
+    await logiInUser({ email: username, password: password });
   };
   const logiInUser = async (loginData) => {
     try {
-      const result = await postData('/login',loginData); 
-      toast.success(`User logged in`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      console.log('result---', result);
-      setData(result.data);
-   
+      const result = await postData('/login', loginData);
+      if (!result.token) {
+        toast.error(`Error:${result?.message}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else {
+        toast.success(`User logged in`, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        setData(result);
+        if (result?.token) {
+          setAuthToken(result.token)
+          navigate('/dashboard');
+        }
+      }
+
     } catch (error) {
       console.error('Error fetching data:', error);
-      toast.error(`Error  While user logged in`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+
     }
   };
-
- 
   const isLoginDisabled = !username || !password;
 
   return (
