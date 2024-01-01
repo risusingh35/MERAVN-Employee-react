@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {  useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import setAuthToken from '../../service/tokenConfig'
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'; // Import eye icons
 import { postData, fetchData } from '../../service/apiService';
+
+import {
+  setAccessToken
+} from '../../redux/features/tokenstore/tokenSlice';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [data, setData] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log('Username:', username);
@@ -46,6 +53,7 @@ const Login = () => {
         setData(result);
         if (result?.token) {
           setAuthToken(result.token)
+          dispatch(setAccessToken(result.token))
           navigate('/dashboard');
         }
       }
