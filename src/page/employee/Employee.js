@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { BsPencilSquare, BsFillTrashFill } from 'react-icons/bs';
-import { postData, fetchData } from '../../service/apiService';
+import { fetchData } from '../../service/apiService';
 import Pagination from '../../component/Pagination';
 import ItemsPerPageDropdown from '../../component/ItemsPerPageDropdown';
 import SearchComponent from '../../component/SearchComponent';
+import { useNavigate } from 'react-router-dom';
 const Employee = () => {
+    const navigate = useNavigate();
     const [employeesRes, setEmployees] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [perPageCount, setPerPageCount] = useState(10);
     const [searchTerm, setSearchTerm] = useState('');
-    const fetchEmployees = async (page, perPage,searchTerm) => {
+    const fetchEmployees = async (page, perPage, searchTerm) => {
         try {
             await fetchData(`/employee?page=${page}&perPage=${perPage}&searchTerm=${searchTerm}`).then((res) => {
-                console.log('res-------', res);
                 setEmployees(res.employee);
                 setTotalPages(res.totalPages);
             })
@@ -24,12 +25,12 @@ const Employee = () => {
         }
     };
     const handleSearch = (searchTerm) => {
-        if (searchTerm.length>2) {
+        if (searchTerm.length > 2) {
             setSearchTerm(searchTerm)
-        } else   if (searchTerm.length<1) {
-            setSearchTerm(searchTerm)  
+        } else if (searchTerm.length < 1) {
+            setSearchTerm(searchTerm)
         }
-        
+
     };
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -39,11 +40,12 @@ const Employee = () => {
         setCurrentPage(1); // Reset to the first page when changing items per page
     };
     useEffect(() => {
-        fetchEmployees(currentPage, perPageCount,searchTerm);
-    }, [currentPage, perPageCount,searchTerm]);
+        fetchEmployees(currentPage, perPageCount, searchTerm);
+    }, [currentPage, perPageCount, searchTerm]);
 
-    const handleEdit = (employee) => {
-        console.log('Editing employee:', employee);
+    const handleEdit = (id) => {
+        console.log('Editing employee id:', id);
+        navigate(`/add-edit-employee?id=${id}`)
     };
 
     const handleDelete = (employeeid) => {
@@ -78,7 +80,7 @@ const Employee = () => {
                             <td>{employee.email}</td>
                             <td>{employee.role}</td>
                             <td>
-                                <BsPencilSquare className="text-primary me-2" onClick={() => handleEdit(employee)} />
+                                <BsPencilSquare className="text-primary me-2" onClick={() => handleEdit(employee._id)} />
                                 <BsFillTrashFill className="text-danger" onClick={() => handleDelete(employee._id)} />
                             </td>
                         </tr>

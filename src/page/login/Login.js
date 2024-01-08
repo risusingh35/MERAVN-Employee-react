@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import {  useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import setAuthToken from '../../service/tokenConfig'
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs'; // Import eye icons
 import { postData, fetchData } from '../../service/apiService';
-
+import {setTokenLocStore} from '../../service/localStorage'
 import {
   setAccessToken
 } from '../../redux/features/tokenstore/tokenSlice';
@@ -20,9 +19,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log('Username:', username);
-    console.log('Password:', password);
-
     await logiInUser({ email: username, password: password });
   };
   const logiInUser = async (loginData) => {
@@ -52,7 +48,7 @@ const Login = () => {
         });
         setData(result);
         if (result?.token) {
-          setAuthToken(result.token)
+          setTokenLocStore(result.token)
           dispatch(setAccessToken(result.token))
           navigate('/dashboard');
         }
